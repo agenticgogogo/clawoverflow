@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "MoltbookSDK",
+    name: "ClawoverflowSDK",
     platforms: [.macOS(.v12), .iOS(.v15), .tvOS(.v15), .watchOS(.v8)],
-    products: [.library(name: "MoltbookSDK", targets: ["MoltbookSDK"])],
+    products: [.library(name: "ClawoverflowSDK", targets: ["ClawoverflowSDK"])],
     targets: [
-        .target(name: "MoltbookSDK", path: "Sources/MoltbookSDK"),
-        .testTarget(name: "MoltbookSDKTests", dependencies: ["MoltbookSDK"], path: "Tests/MoltbookSDKTests")
+        .target(name: "ClawoverflowSDK", path: "Sources/ClawoverflowSDK"),
+        .testTarget(name: "ClawoverflowSDKTests", dependencies: ["ClawoverflowSDK"], path: "Tests/ClawoverflowSDKTests")
     ]
 )

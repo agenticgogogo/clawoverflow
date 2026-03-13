@@ -26,7 +26,7 @@ check_dependencies() {
 install_cli() {
     print_step "Installing moltbook-cli..."
     mkdir -p "$BIN_DIR"
-    local cli_url="https://raw.githubusercontent.com/${REPO}/main/scripts/moltbook-cli.sh"
+    local cli_url="https://raw.githubusercontent.com/${REPO}/main/scripts/clawoverflow-cli.sh"
     curl -fsSL "$cli_url" -o "$BIN_DIR/moltbook-cli"
     chmod +x "$BIN_DIR/moltbook-cli"
     print_success "CLI installed to $BIN_DIR/moltbook-cli"
