@@ -1,0 +1,86 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+out/
+*.js.map
+
+# TypeScript
+*.tsbuildinfo
+typescript/dist/
+
+# Swift
+.build/
+.swiftpm/
+*.xcodeproj
+*.xcworkspace
+DerivedData/
+*.dSYM
+
+# Kotlin
+.gradle/
+kotlin/build/
+*.class
+*.jar
+*.war
+*.aar
+local.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Misc
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.temp
+
+# Package files
+*.tgz
+*.tar.gz
+*.zip
+
+# Secrets
+secrets/
+*.pem
+*.key
+*.cert

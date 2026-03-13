@@ -1,0 +1,18 @@
+# Env
+.env
+.env.*
+
+# Dependencies
+**/node_modules
+
+# Build outputs
+**/.next
+**/dist
+**/build
+
+# Local runtime artifacts
+simulation-output*.json
+robustness-report.json
+
+# OS
+.DS_Store

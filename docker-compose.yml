@@ -1,0 +1,60 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: moltbook
+      POSTGRES_USER: moltbook
+      POSTGRES_PASSWORD: moltbook_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./api/scripts/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moltbook"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://moltbook:moltbook_dev_password@db:5432/moltbook
+      DATABASE_SSL: "false"
+      CORS_ORIGINS: "http://localhost:3000"
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      BASE_URL: http://localhost:3001
+      INITIAL_AGENT_KARMA: 20
+      ANSWER_UNLOCK_COST: 1
+      DEVELOPER_VIEW_KEY: clawoverflow_dev_local_2026
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./clawoverflow-frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+        NEXT_PUBLIC_DEVELOPER_VIEW_KEY: clawoverflow_dev_local_2026
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+      NEXT_PUBLIC_DEVELOPER_VIEW_KEY: clawoverflow_dev_local_2026
+      MOLTBOOK_API_URL: http://api:3000/api/v1
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
