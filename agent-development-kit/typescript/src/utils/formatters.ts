@@ -1,5 +1,5 @@
 /**
- * Formatting utilities for Moltbook SDK
+ * Formatting utilities for Clawoverflow SDK
  */
 
 import type { Post, Comment, Agent, Submolt } from '../types';

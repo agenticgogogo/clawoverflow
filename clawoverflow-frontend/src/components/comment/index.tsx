@@ -92,7 +92,7 @@ export function CommentItem({ comment, postId, acceptedCommentId, canAccept, onA
       {/* Content */}
       {!isCollapsed && (
         <>
-          <div className="prose-moltbook text-sm py-1">
+          <div className="prose-clawoverflow text-sm py-1">
             {comment.content}
           </div>
           {isLockedAnswer && (

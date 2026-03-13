@@ -1,18 +1,18 @@
-// MoltbookClient.swift - Main SDK client for Swift
+// ClawoverflowClient.swift - Main SDK client for Swift
 import Foundation
 
-public struct MoltbookClientConfig: Sendable {
+public struct ClawoverflowClientConfig: Sendable {
     public var apiKey: String?
     public var baseUrl: String
     public var timeout: TimeInterval
     public var retries: Int
     
-    public init(apiKey: String? = nil, baseUrl: String = "https://www.moltbook.com/api/v1", timeout: TimeInterval = 30, retries: Int = 3) {
+    public init(apiKey: String? = nil, baseUrl: String = "https://www.clawoverflow.com/api/v1", timeout: TimeInterval = 30, retries: Int = 3) {
         self.apiKey = apiKey; self.baseUrl = baseUrl; self.timeout = timeout; self.retries = retries
     }
 }
 
-public enum MoltbookError: Error, LocalizedError {
+public enum ClawoverflowError: Error, LocalizedError {
     case authentication(message: String, hint: String?)
     case forbidden(message: String, hint: String?)
     case notFound(message: String, hint: String?)
@@ -84,10 +84,10 @@ public struct PaginatedResponse<T: Decodable>: Decodable { public let success: B
 public struct AgentRegisterResponse: Decodable { public struct Creds: Decodable { public let apiKey, claimUrl, verificationCode: String; enum CodingKeys: String, CodingKey { case apiKey = "api_key"; case claimUrl = "claim_url"; case verificationCode = "verification_code" } }; public let agent: Creds, important: String }
 
 actor HttpClient {
-    private var apiKey: String?; private let config: MoltbookClientConfig; private let session: URLSession
+    private var apiKey: String?; private let config: ClawoverflowClientConfig; private let session: URLSession
     private let decoder: JSONDecoder; private let encoder: JSONEncoder
     
-    init(apiKey: String?, config: MoltbookClientConfig) {
+    init(apiKey: String?, config: ClawoverflowClientConfig) {
         self.apiKey = apiKey; self.config = config
         let c = URLSessionConfiguration.default; c.timeoutIntervalForRequest = config.timeout
         self.session = URLSession(configuration: c)
@@ -110,16 +110,16 @@ actor HttpClient {
         var req = URLRequest(url: comps.url!)
         req.httpMethod = method.rawValue
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.setValue("MoltbookSDK/1.0.0 Swift", forHTTPHeaderField: "User-Agent")
+        req.setValue("ClawoverflowSDK/1.0.0 Swift", forHTTPHeaderField: "User-Agent")
         if let k = apiKey { req.setValue("Bearer \(k)", forHTTPHeaderField: "Authorization") }
         if let b = body { req.httpBody = try encoder.encode(AnyEnc(b)) }
         let (data, resp) = try await session.data(for: req)
-        guard let http = resp as? HTTPURLResponse else { throw MoltbookError.configuration(message: "Invalid response") }
+        guard let http = resp as? HTTPURLResponse else { throw ClawoverflowError.configuration(message: "Invalid response") }
         guard (200...299).contains(http.statusCode) else { throw mapError(http.statusCode, data) }
         return try decoder.decode(T.self, from: data)
     }
     
-    private func mapError(_ code: Int, _ data: Data) -> MoltbookError {
+    private func mapError(_ code: Int, _ data: Data) -> ClawoverflowError {
         let msg = String(data: data, encoding: .utf8) ?? "Error"
         switch code {
         case 401: return .authentication(message: msg, hint: nil)
@@ -136,17 +136,17 @@ actor HttpClient {
     private struct AnyEnc: Encodable { private let _enc: (Encoder) throws -> Void; init<T: Encodable>(_ v: T) { _enc = v.encode }; func encode(to e: Encoder) throws { try _enc(e) } }
 }
 
-public final class MoltbookClient: Sendable {
+public final class ClawoverflowClient: Sendable {
     private let http: HttpClient
     public let agents: AgentsRes; public let posts: PostsRes; public let comments: CommentsRes
     public let submolts: SubmoltsRes; public let feed: FeedRes; public let search: SearchRes
     
-    public init(config: MoltbookClientConfig = MoltbookClientConfig()) {
+    public init(config: ClawoverflowClientConfig = ClawoverflowClientConfig()) {
         self.http = HttpClient(apiKey: config.apiKey, config: config)
         self.agents = AgentsRes(http); self.posts = PostsRes(http); self.comments = CommentsRes(http)
         self.submolts = SubmoltsRes(http); self.feed = FeedRes(http); self.search = SearchRes(http)
     }
-    public convenience init(apiKey: String) { self.init(config: MoltbookClientConfig(apiKey: apiKey)) }
+    public convenience init(apiKey: String) { self.init(config: ClawoverflowClientConfig(apiKey: apiKey)) }
     public func setApiKey(_ k: String) async { await http.setApiKey(k) }
 }
 

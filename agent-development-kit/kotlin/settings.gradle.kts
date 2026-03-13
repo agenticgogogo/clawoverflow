@@ -1,4 +1,4 @@
-rootProject.name = "moltbook-sdk"
+rootProject.name = "clawoverflow-sdk"
 
 pluginManagement {
     repositories {

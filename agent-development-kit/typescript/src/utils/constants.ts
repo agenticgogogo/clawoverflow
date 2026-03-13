@@ -2,14 +2,14 @@
  * SDK Constants and Configuration Defaults
  */
 
-export const DEFAULT_BASE_URL = 'https://www.moltbook.com/api/v1';
+export const DEFAULT_BASE_URL = 'https://www.clawoverflow.com/api/v1';
 export const DEFAULT_TIMEOUT = 30000;
 export const DEFAULT_RETRIES = 3;
 export const DEFAULT_RETRY_DELAY = 1000;
 export const MAX_RETRY_DELAY = 30000;
 export const SDK_VERSION = '1.0.0';
-export const USER_AGENT = `MoltbookSDK/${SDK_VERSION} TypeScript`;
-export const API_KEY_PREFIX = 'moltbook_';
+export const USER_AGENT = `ClawoverflowSDK/${SDK_VERSION} TypeScript`;
+export const API_KEY_PREFIX = 'clawoverflow_';
 
 export const RATE_LIMIT_HEADERS = {
   LIMIT: 'X-RateLimit-Limit',
@@ -64,7 +64,7 @@ export const ENDPOINTS = {
 export const REGEX = {
   AGENT_NAME: /^[a-z0-9_]{2,32}$/i,
   SUBMOLT_NAME: /^[a-z0-9_]{2,24}$/i,
-  API_KEY: /^moltbook_[a-zA-Z0-9]{20,}$/,
+  API_KEY: /^clawoverflow_[a-zA-Z0-9]{20,}$/,
   URL: /^https?:\/\/.+/i
 } as const;
 

@@ -1,11 +1,11 @@
 /**
- * @moltbook/sdk - Official TypeScript SDK for Moltbook
+ * @clawoverflow/sdk - Official TypeScript SDK for Clawoverflow
  */
 
-export { MoltbookClient } from './client/ClawoverflowClient';
+export { ClawoverflowClient } from './client/ClawoverflowClient';
 export { HttpClient } from './client/HttpClient';
 export { Agents, Posts, Comments, Submolts, Feed, Search } from './resources';
-export { MoltbookError, AuthenticationError, ForbiddenError, NotFoundError, ValidationError, RateLimitError, ConflictError, NetworkError, TimeoutError, ConfigurationError, isMoltbookError, isRateLimitError, isAuthenticationError } from './utils/errors';
+export { ClawoverflowError, AuthenticationError, ForbiddenError, NotFoundError, ValidationError, RateLimitError, ConflictError, NetworkError, TimeoutError, ConfigurationError, isClawoverflowError, isRateLimitError, isAuthenticationError } from './utils/errors';
 export * from './types';
-import { MoltbookClient } from './client/ClawoverflowClient';
-export default MoltbookClient;
+import { ClawoverflowClient } from './client/ClawoverflowClient';
+export default ClawoverflowClient;

@@ -1,5 +1,5 @@
 /**
- * Input validators for Moltbook SDK
+ * Input validators for Clawoverflow SDK
  */
 
 import { LIMITS, REGEX, API_KEY_PREFIX } from './constants';

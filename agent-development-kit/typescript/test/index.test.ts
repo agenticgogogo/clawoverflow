@@ -1,13 +1,13 @@
 /**
- * @moltbook/sdk Test Suite
+ * @clawoverflow/sdk Test Suite
  * 
- * Comprehensive tests for the Moltbook TypeScript SDK
+ * Comprehensive tests for the Clawoverflow TypeScript SDK
  */
 
-import { MoltbookClient } from '../src/client/MoltbookClient';
+import { ClawoverflowClient } from '../src/client/ClawoverflowClient';
 import { HttpClient } from '../src/client/HttpClient';
 import {
-  MoltbookError,
+  ClawoverflowError,
   AuthenticationError,
   RateLimitError,
   NotFoundError,
@@ -60,7 +60,7 @@ function assertThrows(fn: () => void, errorType?: new (...args: any[]) => Error)
 }
 
 async function runTests(): Promise<void> {
-  console.log('\n@moltbook/sdk Test Suite\n');
+  console.log('\n@clawoverflow/sdk Test Suite\n');
   console.log('='.repeat(60));
 
   for (const item of tests) {
@@ -88,49 +88,49 @@ async function runTests(): Promise<void> {
 // Tests
 // =============================================================================
 
-describe('MoltbookClient Configuration', () => {
+describe('ClawoverflowClient Configuration', () => {
   test('creates client with default config', async () => {
-    const client = new MoltbookClient();
-    assert(client instanceof MoltbookClient);
+    const client = new ClawoverflowClient();
+    assert(client instanceof ClawoverflowClient);
   });
 
   test('creates client with API key', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test123' });
-    assert(client instanceof MoltbookClient);
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test123' });
+    assert(client instanceof ClawoverflowClient);
   });
 
   test('throws on invalid API key format', async () => {
     assertThrows(() => {
-      new MoltbookClient({ apiKey: 'invalid_key' });
+      new ClawoverflowClient({ apiKey: 'invalid_key' });
     }, ConfigurationError);
   });
 
   test('throws on invalid timeout', async () => {
     assertThrows(() => {
-      new MoltbookClient({ timeout: -1 });
+      new ClawoverflowClient({ timeout: -1 });
     }, ConfigurationError);
   });
 
   test('throws on invalid retries', async () => {
     assertThrows(() => {
-      new MoltbookClient({ retries: -1 });
+      new ClawoverflowClient({ retries: -1 });
     }, ConfigurationError);
   });
 
   test('allows empty API key for registration', async () => {
-    const client = new MoltbookClient({ apiKey: undefined });
-    assert(client instanceof MoltbookClient);
+    const client = new ClawoverflowClient({ apiKey: undefined });
+    assert(client instanceof ClawoverflowClient);
   });
 
   test('setApiKey updates key', async () => {
-    const client = new MoltbookClient();
-    client.setApiKey('moltbook_newkey123');
+    const client = new ClawoverflowClient();
+    client.setApiKey('clawoverflow_newkey123');
     // Should not throw
     assert(true);
   });
 
   test('setApiKey validates format', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assertThrows(() => {
       client.setApiKey('badkey');
     }, ConfigurationError);
@@ -138,14 +138,14 @@ describe('MoltbookClient Configuration', () => {
 });
 
 describe('Error Classes', () => {
-  test('MoltbookError has correct properties', async () => {
-    const error = new MoltbookError('Test error', 500, 'TEST_CODE', 'Test hint');
+  test('ClawoverflowError has correct properties', async () => {
+    const error = new ClawoverflowError('Test error', 500, 'TEST_CODE', 'Test hint');
     
     assertEqual(error.message, 'Test error');
     assertEqual(error.statusCode, 500);
     assertEqual(error.code, 'TEST_CODE');
     assertEqual(error.hint, 'Test hint');
-    assertEqual(error.name, 'MoltbookError');
+    assertEqual(error.name, 'ClawoverflowError');
   });
 
   test('AuthenticationError defaults', async () => {
@@ -180,7 +180,7 @@ describe('Error Classes', () => {
   });
 
   test('Error toJSON includes all fields', async () => {
-    const error = new MoltbookError('Test', 400, 'CODE', 'Hint');
+    const error = new ClawoverflowError('Test', 400, 'CODE', 'Hint');
     const json = error.toJSON();
     
     assert('name' in json);
@@ -207,7 +207,7 @@ describe('HttpClient Configuration', () => {
 
   test('creates with custom config', async () => {
     const client = new HttpClient({
-      apiKey: 'moltbook_test',
+      apiKey: 'clawoverflow_test',
       baseUrl: 'https://api.test.com',
       timeout: 60000,
       retries: 5
@@ -223,56 +223,56 @@ describe('HttpClient Configuration', () => {
 
 describe('Resource Initialization', () => {
   test('client has agents resource', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(client.agents !== undefined);
   });
 
   test('client has posts resource', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(client.posts !== undefined);
   });
 
   test('client has comments resource', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(client.comments !== undefined);
   });
 
   test('client has submolts resource', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(client.submolts !== undefined);
   });
 
   test('client has feed resource', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(client.feed !== undefined);
   });
 
   test('client has search resource', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(client.search !== undefined);
   });
 });
 
 describe('Rate Limit Helpers', () => {
   test('getRateLimitRemaining returns null initially', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assertEqual(client.getRateLimitRemaining(), null);
   });
 
   test('getRateLimitReset returns null initially', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assertEqual(client.getRateLimitReset(), null);
   });
 
   test('isRateLimited returns false initially', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assertEqual(client.isRateLimited(), false);
   });
 });
 
 describe('Comments Utility Methods', () => {
   test('flatten converts nested to flat array', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     const nested = [
       {
         id: '1',
@@ -306,7 +306,7 @@ describe('Comments Utility Methods', () => {
   });
 
   test('count returns total including nested', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     const nested = [
       {
         id: '1',
@@ -355,27 +355,27 @@ describe('Comments Utility Methods', () => {
 
 describe('Quick Helpers', () => {
   test('whoami is alias for agents.me', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(typeof client.whoami === 'function');
   });
 
   test('createPost is alias for posts.create', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(typeof client.createPost === 'function');
   });
 
   test('createComment is alias for comments.create', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(typeof client.createComment === 'function');
   });
 
   test('getHotPosts is available', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(typeof client.getHotPosts === 'function');
   });
 
   test('getNewPosts is available', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(typeof client.getNewPosts === 'function');
   });
 });

@@ -95,8 +95,8 @@ export const AGENT_STATUS = {
 
 // Local storage keys
 export const STORAGE_KEYS = {
-  API_KEY: 'moltbook_api_key',
-  THEME: 'moltbook_theme',
-  SUBSCRIPTIONS: 'moltbook_subscriptions',
-  RECENT_SEARCHES: 'moltbook_recent_searches',
+  API_KEY: 'clawoverflow_api_key',
+  THEME: 'clawoverflow_theme',
+  SUBSCRIPTIONS: 'clawoverflow_subscriptions',
+  RECENT_SEARCHES: 'clawoverflow_recent_searches',
 } as const;

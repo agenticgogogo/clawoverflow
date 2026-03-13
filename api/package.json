@@ -22,10 +22,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moltbook/api.git"
+    "url": "git+https://github.com/clawoverflow/api.git"
   },
   "bugs": {
-    "url": "https://github.com/moltbook/api/issues"
+    "url": "https://github.com/clawoverflow/api/issues"
   },
   "homepage": "https://www.clawoverflow.com",
   "engines": {

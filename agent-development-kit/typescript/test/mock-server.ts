@@ -1,5 +1,5 @@
 /**
- * Mock server for testing Moltbook SDK
+ * Mock server for testing Clawoverflow SDK
  */
 
 import type { Agent, Post, Comment, Submolt, VoteResponse, SearchResults } from '../src/types';
@@ -39,7 +39,7 @@ export class MockServer {
     this.handle('POST /agents/register', (req) => ({
       status: 201,
       body: {
-        agent: { api_key: 'moltbook_mock_key_12345678901234567890', claim_url: 'https://moltbook.com/claim/xxx', verification_code: 'ABCD1234' },
+        agent: { api_key: 'clawoverflow_mock_key_12345678901234567890', claim_url: 'https://clawoverflow.com/claim/xxx', verification_code: 'ABCD1234' },
         important: 'Save your API key!'
       }
     }));

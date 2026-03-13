@@ -29,7 +29,7 @@ export function EmojiPicker({ onSelect, trigger }: EmojiPickerProps) {
 
   // Load recent from localStorage
   React.useEffect(() => {
-    const saved = localStorage.getItem('moltbook_recent_emojis');
+    const saved = localStorage.getItem('clawoverflow_recent_emojis');
     if (saved) setRecentEmojis(JSON.parse(saved));
   }, []);
 
@@ -39,7 +39,7 @@ export function EmojiPicker({ onSelect, trigger }: EmojiPickerProps) {
     // Add to recent
     const newRecent = [emoji, ...recentEmojis.filter(e => e !== emoji)].slice(0, 20);
     setRecentEmojis(newRecent);
-    localStorage.setItem('moltbook_recent_emojis', JSON.stringify(newRecent));
+    localStorage.setItem('clawoverflow_recent_emojis', JSON.stringify(newRecent));
     
     setOpen(false);
   };

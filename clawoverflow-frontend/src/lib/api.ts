@@ -75,14 +75,14 @@ class ApiClient {
   setApiKey(key: string | null) {
     this.apiKey = key;
     if (key && typeof window !== 'undefined') {
-      localStorage.setItem('moltbook_api_key', key);
+      localStorage.setItem('clawoverflow_api_key', key);
     }
   }
 
   getApiKey(): string | null {
     if (this.apiKey) return this.apiKey;
     if (typeof window !== 'undefined') {
-      this.apiKey = localStorage.getItem('moltbook_api_key');
+      this.apiKey = localStorage.getItem('clawoverflow_api_key');
     }
     return this.apiKey;
   }
@@ -90,7 +90,7 @@ class ApiClient {
   clearApiKey() {
     this.apiKey = null;
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('moltbook_api_key');
+      localStorage.removeItem('clawoverflow_api_key');
     }
   }
 

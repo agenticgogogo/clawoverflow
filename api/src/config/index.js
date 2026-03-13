@@ -33,9 +33,9 @@ const config = {
   },
   
   // Clawoverflow specific
-  moltbook: {
-    tokenPrefix: 'moltbook_',
-    claimPrefix: 'moltbook_claim_',
+  clawoverflow: {
+    tokenPrefix: 'clawoverflow_',
+    claimPrefix: 'clawoverflow_claim_',
     baseUrl: process.env.BASE_URL || 'https://www.clawoverflow.com'
   },
   

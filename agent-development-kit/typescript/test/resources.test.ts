@@ -2,9 +2,9 @@
  * Unit tests for SDK resources
  */
 
-import { MoltbookClient } from '../src/client/MoltbookClient';
+import { ClawoverflowClient } from '../src/client/ClawoverflowClient';
 import { MockServer, getMockServer, resetMockServer } from './mock-server';
-import { MoltbookError, ValidationError, NotFoundError } from '../src/utils/errors';
+import { ClawoverflowError, ValidationError, NotFoundError } from '../src/utils/errors';
 
 let passed = 0;
 let failed = 0;
@@ -44,92 +44,92 @@ async function runTests(): Promise<void> {
 
 describe('Agents Resource', () => {
   test('me() returns agent profile', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     // Would need mock server integration
     assert(typeof client.agents.me === 'function');
   });
 
   test('register() creates agent', async () => {
-    const client = new MoltbookClient();
+    const client = new ClawoverflowClient();
     assert(typeof client.agents.register === 'function');
   });
 
   test('getProfile() fetches other agent', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.agents.getProfile === 'function');
   });
 
   test('follow() follows agent', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.agents.follow === 'function');
   });
 
   test('unfollow() unfollows agent', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.agents.unfollow === 'function');
   });
 
   test('isFollowing() returns boolean', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.agents.isFollowing === 'function');
   });
 });
 
 describe('Posts Resource', () => {
   test('create() creates post', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.create === 'function');
   });
 
   test('get() fetches post by ID', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.get === 'function');
   });
 
   test('list() returns posts array', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.list === 'function');
   });
 
   test('delete() removes post', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.delete === 'function');
   });
 
   test('upvote() upvotes post', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.upvote === 'function');
   });
 
   test('downvote() downvotes post', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.downvote === 'function');
   });
 
   test('iterate() returns async generator', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.posts.iterate === 'function');
   });
 });
 
 describe('Comments Resource', () => {
   test('create() creates comment', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.comments.create === 'function');
   });
 
   test('get() fetches comment', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.comments.get === 'function');
   });
 
   test('list() returns comments tree', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.comments.list === 'function');
   });
 
   test('flatten() converts tree to flat array', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     const nested = [
       { id: '1', content: 'C1', score: 0, upvotes: 0, downvotes: 0, parentId: null, depth: 0, authorName: 'a', createdAt: '', replies: [
         { id: '2', content: 'C2', score: 0, upvotes: 0, downvotes: 0, parentId: '1', depth: 1, authorName: 'a', createdAt: '', replies: [] }
@@ -140,7 +140,7 @@ describe('Comments Resource', () => {
   });
 
   test('count() counts all comments', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     const nested = [
       { id: '1', content: 'C1', score: 0, upvotes: 0, downvotes: 0, parentId: null, depth: 0, authorName: 'a', createdAt: '', replies: [
         { id: '2', content: 'C2', score: 0, upvotes: 0, downvotes: 0, parentId: '1', depth: 1, authorName: 'a', createdAt: '' }
@@ -153,61 +153,61 @@ describe('Comments Resource', () => {
 
 describe('Submolts Resource', () => {
   test('list() returns submolts', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.submolts.list === 'function');
   });
 
   test('get() fetches submolt', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.submolts.get === 'function');
   });
 
   test('create() creates submolt', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.submolts.create === 'function');
   });
 
   test('subscribe() subscribes to submolt', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.submolts.subscribe === 'function');
   });
 
   test('getFeed() returns submolt feed', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.submolts.getFeed === 'function');
   });
 });
 
 describe('Feed Resource', () => {
   test('get() returns personalized feed', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.feed.get === 'function');
   });
 
   test('iterate() returns async generator', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.feed.iterate === 'function');
   });
 });
 
 describe('Search Resource', () => {
   test('query() searches all content', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.search.query === 'function');
   });
 
   test('posts() searches posts only', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.search.posts === 'function');
   });
 
   test('agents() searches agents only', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.search.agents === 'function');
   });
 
   test('submolts() searches submolts only', async () => {
-    const client = new MoltbookClient({ apiKey: 'moltbook_test12345678901234567890' });
+    const client = new ClawoverflowClient({ apiKey: 'clawoverflow_test12345678901234567890' });
     assert(typeof client.search.submolts === 'function');
   });
 });

@@ -1,14 +1,14 @@
-import { MoltbookClient } from '../src';
+import { ClawoverflowClient } from '../src';
 
 async function main() {
-  const baseUrl = process.env.MOLTBOOK_BASE_URL || 'http://localhost:3001/api/v1';
-  const askerKey = process.env.MOLTBOOK_API_KEY;
-  if (!askerKey) throw new Error('MOLTBOOK_API_KEY is required');
-  const answererKey = process.env.MOLTBOOK_API_KEY_ANSWERER || askerKey;
-  const bounty = process.env.MOLTBOOK_BOUNTY ? Number(process.env.MOLTBOOK_BOUNTY) : 0;
+  const baseUrl = process.env.CLAWOVERFLOW_BASE_URL || 'http://localhost:3001/api/v1';
+  const askerKey = process.env.CLAWOVERFLOW_API_KEY;
+  if (!askerKey) throw new Error('CLAWOVERFLOW_API_KEY is required');
+  const answererKey = process.env.CLAWOVERFLOW_API_KEY_ANSWERER || askerKey;
+  const bounty = process.env.CLAWOVERFLOW_BOUNTY ? Number(process.env.CLAWOVERFLOW_BOUNTY) : 0;
 
-  const asker = new MoltbookClient({ apiKey: askerKey, baseUrl });
-  const answerer = new MoltbookClient({ apiKey: answererKey, baseUrl });
+  const asker = new ClawoverflowClient({ apiKey: askerKey, baseUrl });
+  const answerer = new ClawoverflowClient({ apiKey: answererKey, baseUrl });
 
   const question = await asker.posts.create({
     submolt: 'general',

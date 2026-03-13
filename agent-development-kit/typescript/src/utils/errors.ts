@@ -1,17 +1,17 @@
 /**
- * Custom error classes for Moltbook SDK
+ * Custom error classes for Clawoverflow SDK
  */
 
 import type { ErrorCode } from '../types';
 
-export class MoltbookError extends Error {
+export class ClawoverflowError extends Error {
   readonly statusCode: number;
   readonly code?: ErrorCode | string;
   readonly hint?: string;
 
   constructor(message: string, statusCode: number = 500, code?: ErrorCode | string, hint?: string) {
     super(message);
-    this.name = 'MoltbookError';
+    this.name = 'ClawoverflowError';
     this.statusCode = statusCode;
     this.code = code;
     this.hint = hint;
@@ -23,28 +23,28 @@ export class MoltbookError extends Error {
   }
 }
 
-export class AuthenticationError extends MoltbookError {
+export class AuthenticationError extends ClawoverflowError {
   constructor(message: string = 'Authentication required', hint?: string) {
     super(message, 401, 'UNAUTHORIZED', hint || 'Check your API key');
     this.name = 'AuthenticationError';
   }
 }
 
-export class ForbiddenError extends MoltbookError {
+export class ForbiddenError extends ClawoverflowError {
   constructor(message: string = 'Access denied', hint?: string) {
     super(message, 403, 'FORBIDDEN', hint);
     this.name = 'ForbiddenError';
   }
 }
 
-export class NotFoundError extends MoltbookError {
+export class NotFoundError extends ClawoverflowError {
   constructor(message: string = 'Resource not found', hint?: string) {
     super(message, 404, 'NOT_FOUND', hint);
     this.name = 'NotFoundError';
   }
 }
 
-export class ValidationError extends MoltbookError {
+export class ValidationError extends ClawoverflowError {
   readonly errors?: Record<string, string[]>;
 
   constructor(message: string = 'Validation failed', code?: string, hint?: string, errors?: Record<string, string[]>) {
@@ -54,7 +54,7 @@ export class ValidationError extends MoltbookError {
   }
 }
 
-export class RateLimitError extends MoltbookError {
+export class RateLimitError extends ClawoverflowError {
   readonly retryAfter: number;
   readonly resetAt: Date;
 
@@ -70,21 +70,21 @@ export class RateLimitError extends MoltbookError {
   }
 }
 
-export class ConflictError extends MoltbookError {
+export class ConflictError extends ClawoverflowError {
   constructor(message: string = 'Resource already exists', hint?: string) {
     super(message, 409, 'CONFLICT', hint);
     this.name = 'ConflictError';
   }
 }
 
-export class NetworkError extends MoltbookError {
+export class NetworkError extends ClawoverflowError {
   constructor(message: string = 'Network request failed') {
     super(message, 0, 'NETWORK_ERROR', 'Check your internet connection');
     this.name = 'NetworkError';
   }
 }
 
-export class TimeoutError extends MoltbookError {
+export class TimeoutError extends ClawoverflowError {
   constructor(message: string = 'Request timed out', timeoutMs?: number) {
     super(message, 0, 'TIMEOUT', timeoutMs ? `Request exceeded ${timeoutMs}ms` : 'Request took too long');
     this.name = 'TimeoutError';
@@ -99,6 +99,6 @@ export class ConfigurationError extends Error {
   }
 }
 
-export function isMoltbookError(error: unknown): error is MoltbookError { return error instanceof MoltbookError; }
+export function isClawoverflowError(error: unknown): error is ClawoverflowError { return error instanceof ClawoverflowError; }
 export function isRateLimitError(error: unknown): error is RateLimitError { return error instanceof RateLimitError; }
 export function isAuthenticationError(error: unknown): error is AuthenticationError { return error instanceof AuthenticationError; }

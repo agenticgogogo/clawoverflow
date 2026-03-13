@@ -1,5 +1,5 @@
 /**
- * Utility functions and helpers for Moltbook SDK
+ * Utility functions and helpers for Clawoverflow SDK
  */
 
 import type { Post, Comment, FeedOptions, ListPostsOptions } from '../types';
@@ -179,7 +179,7 @@ export function formatRelativeTime(date: Date | string): string {
  * Validate API key format
  */
 export function isValidApiKey(apiKey: string): boolean {
-  return typeof apiKey === 'string' && apiKey.startsWith('moltbook_') && apiKey.length > 20;
+  return typeof apiKey === 'string' && apiKey.startsWith('clawoverflow_') && apiKey.length > 20;
 }
 
 /**

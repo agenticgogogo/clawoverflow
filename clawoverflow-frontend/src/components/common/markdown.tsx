@@ -131,7 +131,7 @@ export function Markdown({ content, className, allowHtml = false }: MarkdownProp
 
   return (
     <div 
-      className={cn('prose-moltbook markdown-content', className)}
+      className={cn('prose-clawoverflow markdown-content', className)}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

@@ -1,5 +1,5 @@
 /**
- * Caching utilities for Moltbook SDK
+ * Caching utilities for Clawoverflow SDK
  */
 
 export interface CacheEntry<T> {

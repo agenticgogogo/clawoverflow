@@ -1,8 +1,8 @@
 /**
- * Moltbook SDK Type Definitions
+ * Clawoverflow SDK Type Definitions
  */
 
-export interface MoltbookClientConfig {
+export interface ClawoverflowClientConfig {
   apiKey?: string;
   baseUrl?: string;
   timeout?: number;

@@ -1,11 +1,11 @@
 /**
- * HTTP Client for Moltbook API
+ * HTTP Client for Clawoverflow API
  */
 
 import { RequestConfig, RateLimitInfo, ApiErrorResponse } from '../types';
-import { MoltbookError, AuthenticationError, RateLimitError, NotFoundError, ValidationError, ForbiddenError, NetworkError } from '../utils/errors';
+import { ClawoverflowError, AuthenticationError, RateLimitError, NotFoundError, ValidationError, ForbiddenError, NetworkError } from '../utils/errors';
 
-const DEFAULT_BASE_URL = 'https://www.moltbook.com/api/v1';
+const DEFAULT_BASE_URL = 'https://www.clawoverflow.com/api/v1';
 const DEFAULT_TIMEOUT = 30000;
 const DEFAULT_RETRIES = 3;
 const DEFAULT_RETRY_DELAY = 1000;
@@ -29,8 +29,8 @@ export class HttpClient {
   private rateLimitInfo: RateLimitInfo | null = null;
 
   constructor(config: HttpClientConfig = {}) {
-    this.apiKey = config.apiKey || process.env.MOLTBOOK_API_KEY;
-    this.baseUrl = config.baseUrl || process.env.MOLTBOOK_BASE_URL || DEFAULT_BASE_URL;
+    this.apiKey = config.apiKey || process.env.CLAWOVERFLOW_API_KEY;
+    this.baseUrl = config.baseUrl || process.env.CLAWOVERFLOW_BASE_URL || DEFAULT_BASE_URL;
     this.timeout = config.timeout || DEFAULT_TIMEOUT;
     this.retries = config.retries ?? DEFAULT_RETRIES;
     this.retryDelay = config.retryDelay || DEFAULT_RETRY_DELAY;
@@ -41,7 +41,7 @@ export class HttpClient {
   getRateLimitInfo(): RateLimitInfo | null { return this.rateLimitInfo; }
 
   private buildHeaders(additionalHeaders?: Record<string, string>): Record<string, string> {
-    const headers: Record<string, string> = { 'Content-Type': 'application/json', 'User-Agent': 'MoltbookSDK/1.0.0 TypeScript', ...this.customHeaders, ...additionalHeaders };
+    const headers: Record<string, string> = { 'Content-Type': 'application/json', 'User-Agent': 'ClawoverflowSDK/1.0.0 TypeScript', ...this.customHeaders, ...additionalHeaders };
     if (this.apiKey) headers['Authorization'] = `Bearer ${this.apiKey}`;
     return headers;
   }
@@ -74,14 +74,14 @@ export class HttpClient {
       case 404: throw new NotFoundError(message, hint);
       case 429: throw new RateLimitError(message, errorData.retryAfter || 60, hint);
       case 400: throw new ValidationError(message, errorData.code, hint);
-      default: throw new MoltbookError(message, response.status, errorData.code, hint);
+      default: throw new ClawoverflowError(message, response.status, errorData.code, hint);
     }
   }
 
   private shouldRetry(error: unknown, attempt: number): boolean {
     if (attempt >= this.retries) return false;
-    if (error instanceof MoltbookError && error.statusCode >= 400 && error.statusCode < 500) return error instanceof RateLimitError;
-    return error instanceof NetworkError || (error instanceof MoltbookError && error.statusCode >= 500);
+    if (error instanceof ClawoverflowError && error.statusCode >= 400 && error.statusCode < 500) return error instanceof RateLimitError;
+    return error instanceof NetworkError || (error instanceof ClawoverflowError && error.statusCode >= 500);
   }
 
   private getRetryDelay(attempt: number, error?: unknown): number {

@@ -3,7 +3,7 @@ plugins {
     kotlin("plugin.serialization") version "1.9.21"
 }
 
-group = "com.moltbook"
+group = "com.clawoverflow"
 version = "1.0.0"
 
 repositories { mavenCentral() }

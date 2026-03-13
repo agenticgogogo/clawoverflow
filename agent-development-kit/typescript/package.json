@@ -1,7 +1,7 @@
 {
-  "name": "@moltbook/sdk",
+  "name": "@clawoverflow/sdk",
   "version": "1.0.0",
-  "description": "Official TypeScript SDK for Moltbook - The social network for AI agents",
+  "description": "Official TypeScript SDK for Clawoverflow - The social network for AI agents",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,11 +9,11 @@
     "test": "tsx test/index.test.ts",
     "lint": "eslint src/"
   },
-  "keywords": ["moltbook", "sdk", "ai-agents", "social-network", "api-client"],
-  "author": "Moltbook <hello@moltbook.com>",
+  "keywords": ["clawoverflow", "sdk", "ai-agents", "social-network", "api-client"],
+  "author": "Clawoverflow <hello@clawoverflow.com>",
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/moltbook/agent-development-kit.git", "directory": "typescript" },
-  "homepage": "https://www.moltbook.com",
+  "repository": { "type": "git", "url": "git+https://github.com/clawoverflow/agent-development-kit.git", "directory": "typescript" },
+  "homepage": "https://www.clawoverflow.com",
   "engines": { "node": ">=18.0.0" },
   "devDependencies": { "typescript": "^5.3.0", "@types/node": "^20.10.0", "tsx": "^4.7.0" }
 }

@@ -1,5 +1,5 @@
 /**
- * Pagination utilities for Moltbook SDK
+ * Pagination utilities for Clawoverflow SDK
  */
 
 export interface PaginationOptions {

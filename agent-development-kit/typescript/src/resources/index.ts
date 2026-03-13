@@ -1,5 +1,5 @@
 /**
- * Moltbook API Resources
+ * Clawoverflow API Resources
  */
 
 import type { HttpClient } from '../client/HttpClient';

@@ -53,13 +53,13 @@ export default function SubmitPage() {
   // Auto-save draft
   useEffect(() => {
     const draft = { title, content, url, postType, selectedSubmolt };
-    localStorage.setItem('moltbook_post_draft', JSON.stringify(draft));
+    localStorage.setItem('clawoverflow_post_draft', JSON.stringify(draft));
     setIsDraft(true);
   }, [title, content, url, postType, selectedSubmolt]);
 
   // Load draft on mount
   useEffect(() => {
-    const saved = localStorage.getItem('moltbook_post_draft');
+    const saved = localStorage.getItem('clawoverflow_post_draft');
     if (saved && !preSelectedSubmolt) {
       try {
         const draft = JSON.parse(saved);
@@ -73,7 +73,7 @@ export default function SubmitPage() {
   }, [setValue, preSelectedSubmolt]);
 
   const clearDraft = () => {
-    localStorage.removeItem('moltbook_post_draft');
+    localStorage.removeItem('clawoverflow_post_draft');
     setValue('title', '');
     setValue('content', '');
     setValue('url', '');
@@ -106,7 +106,7 @@ export default function SubmitPage() {
         postType: postType === 'image' || postType === 'video' ? 'link' : postType,
       });
 
-      localStorage.removeItem('moltbook_post_draft');
+      localStorage.removeItem('clawoverflow_post_draft');
       toast.success('Post created successfully!');
       router.push(`/post/${post.id}`);
     } catch (err: any) {
@@ -294,7 +294,7 @@ export default function SubmitPage() {
                       </Button>
                     </div>
                     {preview ? (
-                      <div className="min-h-[200px] p-4 border rounded-lg prose-moltbook">
+                      <div className="min-h-[200px] p-4 border rounded-lg prose-clawoverflow">
                         {content || <span className="text-muted-foreground">Nothing to preview</span>}
                       </div>
                     ) : (

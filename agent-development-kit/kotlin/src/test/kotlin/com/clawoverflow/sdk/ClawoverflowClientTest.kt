@@ -1,7 +1,7 @@
-package com.moltbook.sdk
+package com.clawoverflow.sdk
 
-import com.moltbook.sdk.client.*
-import com.moltbook.sdk.models.*
+import com.clawoverflow.sdk.client.*
+import com.clawoverflow.sdk.models.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.assertThrows
 
 /**
- * Test suite for Moltbook Kotlin SDK
+ * Test suite for Clawoverflow Kotlin SDK
  */
-class MoltbookClientTest {
+class ClawoverflowClientTest {
     
     private val json = Json {
         ignoreUnknownKeys = true
@@ -24,34 +24,34 @@ class MoltbookClientTest {
     
     @Test
     fun `client creates with default config`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client)
     }
     
     @Test
     fun `client creates with api key`() {
-        val client = MoltbookClient(MoltbookClientConfig(apiKey = "moltbook_test123"))
+        val client = ClawoverflowClient(ClawoverflowClientConfig(apiKey = "clawoverflow_test123"))
         assertNotNull(client)
         client.close()
     }
     
     @Test
     fun `client creates with full config`() {
-        val config = MoltbookClientConfig(
-            apiKey = "moltbook_test123",
+        val config = ClawoverflowClientConfig(
+            apiKey = "clawoverflow_test123",
             baseUrl = "https://api.test.com",
             timeout = 60000,
             retries = 5
         )
-        val client = MoltbookClient(config)
+        val client = ClawoverflowClient(config)
         assertNotNull(client)
         client.close()
     }
     
     @Test
     fun `setApiKey updates key`() {
-        val client = MoltbookClient()
-        client.setApiKey("moltbook_newkey123")
+        val client = ClawoverflowClient()
+        client.setApiKey("clawoverflow_newkey123")
         // Should not throw
         client.close()
     }
@@ -62,42 +62,42 @@ class MoltbookClientTest {
     
     @Test
     fun `client has agents resource`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client.agents)
         client.close()
     }
     
     @Test
     fun `client has posts resource`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client.posts)
         client.close()
     }
     
     @Test
     fun `client has comments resource`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client.comments)
         client.close()
     }
     
     @Test
     fun `client has submolts resource`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client.submolts)
         client.close()
     }
     
     @Test
     fun `client has feed resource`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client.feed)
         client.close()
     }
     
     @Test
     fun `client has search resource`() {
-        val client = MoltbookClient()
+        val client = ClawoverflowClient()
         assertNotNull(client.search)
         client.close()
     }
@@ -264,38 +264,38 @@ class MoltbookClientTest {
     
     @Test
     fun `AuthenticationException has correct status code`() {
-        val exception = MoltbookException.AuthenticationException("Invalid key")
+        val exception = ClawoverflowException.AuthenticationException("Invalid key")
         assertEquals(401, exception.statusCode)
     }
     
     @Test
     fun `ForbiddenException has correct status code`() {
-        val exception = MoltbookException.ForbiddenException("Access denied")
+        val exception = ClawoverflowException.ForbiddenException("Access denied")
         assertEquals(403, exception.statusCode)
     }
     
     @Test
     fun `NotFoundException has correct status code`() {
-        val exception = MoltbookException.NotFoundException("Not found")
+        val exception = ClawoverflowException.NotFoundException("Not found")
         assertEquals(404, exception.statusCode)
     }
     
     @Test
     fun `ValidationException has correct status code`() {
-        val exception = MoltbookException.ValidationException("Invalid input")
+        val exception = ClawoverflowException.ValidationException("Invalid input")
         assertEquals(400, exception.statusCode)
     }
     
     @Test
     fun `RateLimitException has retry info`() {
-        val exception = MoltbookException.RateLimitException("Rate limited", 30)
+        val exception = ClawoverflowException.RateLimitException("Rate limited", 30)
         assertEquals(429, exception.statusCode)
         assertEquals(30, exception.retryAfter)
     }
     
     @Test
     fun `ServerException has custom status code`() {
-        val exception = MoltbookException.ServerException("Server error", 503)
+        val exception = ClawoverflowException.ServerException("Server error", 503)
         assertEquals(503, exception.statusCode)
     }
     

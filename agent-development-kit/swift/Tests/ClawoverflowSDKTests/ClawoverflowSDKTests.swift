@@ -1,77 +1,77 @@
-// MoltbookSDKTests.swift
-// Tests for MoltbookSDK
+// ClawoverflowSDKTests.swift
+// Tests for ClawoverflowSDK
 
 import XCTest
-@testable import MoltbookSDK
+@testable import ClawoverflowSDK
 
-final class MoltbookSDKTests: XCTestCase {
+final class ClawoverflowSDKTests: XCTestCase {
     
     // MARK: - Client Configuration Tests
     
     func testClientCreationWithDefaultConfig() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client)
     }
     
     func testClientCreationWithApiKey() {
-        let client = MoltbookClient(apiKey: "moltbook_test123")
+        let client = ClawoverflowClient(apiKey: "clawoverflow_test123")
         XCTAssertNotNil(client)
     }
     
     func testClientCreationWithFullConfig() {
-        let config = MoltbookClientConfig(
-            apiKey: "moltbook_test123",
+        let config = ClawoverflowClientConfig(
+            apiKey: "clawoverflow_test123",
             baseUrl: "https://api.test.com",
             timeout: 60,
             retries: 5
         )
-        let client = MoltbookClient(config: config)
+        let client = ClawoverflowClient(config: config)
         XCTAssertNotNil(client)
     }
     
     // MARK: - Resource Availability Tests
     
     func testClientHasAgentsResource() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client.agents)
     }
     
     func testClientHasPostsResource() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client.posts)
     }
     
     func testClientHasCommentsResource() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client.comments)
     }
     
     func testClientHasSubmoltsResource() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client.submolts)
     }
     
     func testClientHasFeedResource() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client.feed)
     }
     
     func testClientHasSearchResource() {
-        let client = MoltbookClient()
+        let client = ClawoverflowClient()
         XCTAssertNotNil(client.search)
     }
     
     // MARK: - Error Tests
     
     func testAuthenticationErrorProperties() {
-        let error = MoltbookError.authentication(message: "Invalid key", hint: "Check API key")
+        let error = ClawoverflowError.authentication(message: "Invalid key", hint: "Check API key")
         
         XCTAssertEqual(error.statusCode, 401)
         XCTAssertFalse(error.isRetryable)
     }
     
     func testRateLimitErrorProperties() {
-        let error = MoltbookError.rateLimited(message: "Too many requests", retryAfter: 30, hint: nil)
+        let error = ClawoverflowError.rateLimited(message: "Too many requests", retryAfter: 30, hint: nil)
         
         XCTAssertEqual(error.statusCode, 429)
         XCTAssertEqual(error.retryAfter, 30)
@@ -79,21 +79,21 @@ final class MoltbookSDKTests: XCTestCase {
     }
     
     func testNotFoundErrorProperties() {
-        let error = MoltbookError.notFound(message: "Post not found", hint: nil)
+        let error = ClawoverflowError.notFound(message: "Post not found", hint: nil)
         
         XCTAssertEqual(error.statusCode, 404)
         XCTAssertFalse(error.isRetryable)
     }
     
     func testValidationErrorProperties() {
-        let error = MoltbookError.validation(message: "Invalid input", code: "VALIDATION", hint: "Check fields")
+        let error = ClawoverflowError.validation(message: "Invalid input", code: "VALIDATION", hint: "Check fields")
         
         XCTAssertEqual(error.statusCode, 400)
         XCTAssertFalse(error.isRetryable)
     }
     
     func testServerErrorIsRetryable() {
-        let error = MoltbookError.server(message: "Internal error", statusCode: 500)
+        let error = ClawoverflowError.server(message: "Internal error", statusCode: 500)
         
         XCTAssertEqual(error.statusCode, 500)
         XCTAssertTrue(error.isRetryable)
@@ -101,13 +101,13 @@ final class MoltbookSDKTests: XCTestCase {
     
     func testNetworkErrorIsRetryable() {
         let underlying = NSError(domain: "test", code: -1009)
-        let error = MoltbookError.network(underlying: underlying)
+        let error = ClawoverflowError.network(underlying: underlying)
         
         XCTAssertTrue(error.isRetryable)
     }
     
     func testTimeoutErrorIsRetryable() {
-        let error = MoltbookError.timeout
+        let error = ClawoverflowError.timeout
         
         XCTAssertTrue(error.isRetryable)
     }

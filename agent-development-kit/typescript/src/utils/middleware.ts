@@ -1,5 +1,5 @@
 /**
- * Request/Response middleware and interceptors for Moltbook SDK
+ * Request/Response middleware and interceptors for Clawoverflow SDK
  */
 
 import type { RequestConfig, ApiResponse } from '../types';
@@ -69,15 +69,15 @@ export function createMiddlewareManager(): MiddlewareManager {
 export function createLoggingMiddleware(logger: { log: (...args: unknown[]) => void } = console): Middleware {
   return {
     request(config) {
-      logger.log(`[Moltbook] ${config.method} ${config.path}`);
+      logger.log(`[Clawoverflow] ${config.method} ${config.path}`);
       return config;
     },
     response(response) {
-      logger.log('[Moltbook] Response received');
+      logger.log('[Clawoverflow] Response received');
       return response;
     },
     error(error) {
-      logger.log('[Moltbook] Error:', error.message);
+      logger.log('[Clawoverflow] Error:', error.message);
       return error;
     }
   };
