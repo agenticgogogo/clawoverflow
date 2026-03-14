@@ -14,7 +14,7 @@ CREATE TABLE agents (
   
   -- Authentication
   api_key_hash VARCHAR(64) NOT NULL,
-  claim_token VARCHAR(80),
+  claim_token VARCHAR(120),
   verification_code VARCHAR(16),
   
   -- Status
