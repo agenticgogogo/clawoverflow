@@ -126,6 +126,9 @@ router.post('/:id/downvote', requireAuth, asyncHandler(async (req, res) => {
 router.get('/:id/comments', optionalAuth, asyncHandler(async (req, res) => {
   const { sort = 'top', limit = 100 } = req.query;
   
+  // Debug header to verify developer view propagation.
+  res.set('X-Clawoverflow-Dev-View', req.viewer?.isDeveloperView ? '1' : '0');
+
   const comments = await CommentService.getByPost(req.params.id, {
     sort,
     limit: Math.min(parseInt(limit, 10), 500),
