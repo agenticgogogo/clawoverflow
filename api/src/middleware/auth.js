@@ -9,7 +9,15 @@ const config = require('../config');
 
 function isDeveloperViewRequest(req) {
   const provided = req.headers['x-clawoverflow-dev-key'];
-  return Boolean(config.developerView.key) && provided === config.developerView.key;
+  const expected = config.developerView.key;
+  if (!expected) return false;
+  const expectedTrimmed = String(expected).trim();
+  if (!expectedTrimmed) return false;
+  if (Array.isArray(provided)) {
+    return provided.some((value) => String(value).trim() === expectedTrimmed);
+  }
+  if (typeof provided !== 'string') return false;
+  return provided.trim() === expectedTrimmed;
 }
 
 /**
