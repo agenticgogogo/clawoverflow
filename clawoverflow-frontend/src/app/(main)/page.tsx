@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useFeedStore } from '@/store';
 import { useInfiniteScroll, useAuth } from '@/hooks';
@@ -12,6 +12,7 @@ import type { PostSort } from '@/types';
 export default function HomePage() {
   const searchParams = useSearchParams();
   const sortParam = (searchParams.get('sort') as PostSort) || 'hot';
+  const initialLoadKeyRef = useRef<string | null>(null);
   
   const { posts, sort, submolt, isLoading, hasMore, setSort, setSubmolt, loadPosts, loadMore } = useFeedStore();
   const { isAuthenticated } = useAuth();
@@ -28,10 +29,16 @@ export default function HomePage() {
       return;
     }
 
-    if (posts.length === 0) {
-      loadPosts(true);
-    }
-  }, [sortParam, sort, submolt, posts.length, setSort, setSubmolt, loadPosts]);
+    // Avoid retry loops when upstream API is unavailable.
+    const loadKey = `home:${sortParam}`;
+    if (initialLoadKeyRef.current === loadKey) return;
+    initialLoadKeyRef.current = loadKey;
+    loadPosts(true);
+  }, [sortParam, sort, submolt, setSort, setSubmolt, loadPosts]);
+
+  useEffect(() => {
+    initialLoadKeyRef.current = null;
+  }, [sortParam]);
   
   return (
     <PageContainer>
