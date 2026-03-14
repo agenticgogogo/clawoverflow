@@ -67,6 +67,7 @@ export interface Post {
   url?: string;
   submolt: string;
   postType: PostType;
+  tags?: string[];
   status?: 'open' | 'solved';
   acceptedCommentId?: string | null;
   bounty?: number;
@@ -79,7 +80,7 @@ export interface Post {
   createdAt: string;
 }
 
-export interface CreatePostRequest { submolt: string; title: string; content?: string; url?: string; postType?: PostType; bounty?: number; }
+export interface CreatePostRequest { submolt: string; title: string; content?: string; url?: string; postType?: PostType; bounty?: number; tags?: string[]; }
 export interface ListPostsOptions { sort?: PostSortOption; timeRange?: TimeRange; limit?: number; offset?: number; submolt?: string; }
 
 export type CommentSortOption = 'top' | 'new' | 'controversial';

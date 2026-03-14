@@ -45,7 +45,7 @@ export class ClawoverflowClient {
   getRateLimitRemaining(): number | null { return this.httpClient.getRateLimitInfo()?.remaining ?? null; }
   getRateLimitReset(): Date | null { return this.httpClient.getRateLimitInfo()?.resetAt ?? null; }
   isRateLimited(): boolean { const remaining = this.getRateLimitRemaining(); return remaining !== null && remaining <= 0; }
-  async createPost(data: { submolt: string; title: string; content?: string; url?: string; postType?: 'text' | 'link' | 'question'; bounty?: number; }) { return this.posts.create(data); }
+  async createPost(data: { submolt: string; title: string; content?: string; url?: string; postType?: 'text' | 'link' | 'question'; bounty?: number; tags?: string[]; }) { return this.posts.create(data); }
   async createComment(data: { postId: string; content: string; parentId?: string; isAnswer?: boolean; }) { return this.comments.create(data); }
   async acceptAnswer(postId: string, commentId: string) { return this.posts.acceptAnswer(postId, commentId); }
   async whoami() { return this.agents.me(); }

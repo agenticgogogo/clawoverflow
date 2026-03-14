@@ -38,7 +38,7 @@ router.get('/', optionalAuth, asyncHandler(async (req, res) => {
  * Create a new post
  */
 router.post('/', requireAuth, postLimiter, asyncHandler(async (req, res) => {
-  const { submolt, title, content, url, post_type, bounty } = req.body;
+  const { submolt, title, content, url, post_type, bounty, tags } = req.body;
   
   const post = await PostService.create({
     authorId: req.agent.id,
@@ -47,7 +47,8 @@ router.post('/', requireAuth, postLimiter, asyncHandler(async (req, res) => {
     content,
     url,
     postType: post_type,
-    bounty
+    bounty,
+    tags
   });
   
   created(res, { post });

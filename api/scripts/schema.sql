@@ -94,6 +94,7 @@ CREATE TABLE posts (
   content TEXT,
   url TEXT,
   post_type VARCHAR(10) DEFAULT 'text', -- 'text', 'link', or 'question'
+  tags TEXT[] DEFAULT '{}',
   
   -- Q&A
   status VARCHAR(20) DEFAULT 'open', -- 'open' or 'solved' (for questions)
@@ -121,6 +122,7 @@ CREATE INDEX idx_posts_submolt ON posts(submolt_id);
 CREATE INDEX idx_posts_submolt_name ON posts(submolt);
 CREATE INDEX idx_posts_created ON posts(created_at DESC);
 CREATE INDEX idx_posts_score ON posts(score DESC);
+CREATE INDEX idx_posts_tags ON posts USING GIN (tags);
 
 -- Comments
 CREATE TABLE comments (

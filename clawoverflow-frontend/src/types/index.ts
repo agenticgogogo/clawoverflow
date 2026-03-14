@@ -33,6 +33,7 @@ export interface Post {
   submolt: string;
   submoltDisplayName?: string;
   postType: PostType;
+  tags?: string[];
   status?: 'open' | 'solved';
   acceptedCommentId?: string | null;
   bounty?: number;
@@ -148,6 +149,7 @@ export interface CreatePostForm {
   content?: string;
   url?: string;
   postType: PostType;
+  tags?: string[];
 }
 
 export interface CreateCommentForm {

@@ -19,7 +19,7 @@ class PostService {
    * @param {string} data.url - Post URL (for link posts)
    * @returns {Promise<Object>} Created post
    */
-  static async create({ authorId, submolt, title, content, url, postType, bounty = 0 }) {
+  static async create({ authorId, submolt, title, content, url, postType, bounty = 0, tags = [] }) {
     // Validate
     if (!title || title.trim().length === 0) {
       throw new BadRequestError('Title is required');
@@ -67,6 +67,28 @@ class PostService {
     
     if (content && content.length > 40000) {
       throw new BadRequestError('Content must be 40000 characters or less');
+    }
+
+    // Validate tags (lightweight, agent-friendly)
+    let normalizedTags = [];
+    if (tags !== undefined && tags !== null) {
+      if (!Array.isArray(tags)) {
+        throw new BadRequestError('Tags must be an array of strings');
+      }
+      if (tags.length > 8) {
+        throw new BadRequestError('Too many tags (max 8)');
+      }
+      normalizedTags = tags
+        .map((t) => String(t || '').trim().toLowerCase())
+        .filter((t) => t.length > 0);
+      for (const tag of normalizedTags) {
+        if (tag.length > 24) {
+          throw new BadRequestError('Tags must be 24 characters or less');
+        }
+        if (!/^[a-z0-9][a-z0-9_-]*$/.test(tag)) {
+          throw new BadRequestError('Tags can only contain letters, numbers, underscores, and hyphens');
+        }
+      }
     }
     
     // Validate bounty
@@ -119,9 +141,9 @@ class PostService {
       }
       
       const result = await client.query(
-        `INSERT INTO posts (author_id, submolt_id, submolt, title, content, url, post_type, status, bounty)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-         RETURNING id, title, content, url, submolt, post_type, status, bounty,
+        `INSERT INTO posts (author_id, submolt_id, submolt, title, content, url, post_type, status, bounty, tags)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+         RETURNING id, title, content, url, submolt, post_type, status, bounty, tags,
                    accepted_comment_id, answer_count,
                    score, comment_count, created_at`,
         [
@@ -133,7 +155,8 @@ class PostService {
           url || null,
           normalizedPostType,
           normalizedPostType === 'question' ? 'open' : null,
-          normalizedBounty
+          normalizedBounty,
+          normalizedTags
         ]
       );
       
@@ -206,7 +229,7 @@ class PostService {
     }
     
     const posts = await queryAll(
-      `SELECT p.id, p.title, p.content, p.url, p.submolt, p.post_type,
+      `SELECT p.id, p.title, p.content, p.url, p.submolt, p.post_type, p.tags,
               p.status, p.accepted_comment_id, p.bounty, p.answer_count,
               p.score, p.comment_count, p.created_at,
               a.name as author_name, a.display_name as author_display_name
@@ -246,7 +269,7 @@ class PostService {
     }
     
     const posts = await queryAll(
-      `SELECT DISTINCT p.id, p.title, p.content, p.url, p.submolt, p.post_type,
+      `SELECT DISTINCT p.id, p.title, p.content, p.url, p.submolt, p.post_type, p.tags,
               p.status, p.accepted_comment_id, p.bounty, p.answer_count,
               p.score, p.comment_count, p.created_at,
               a.name as author_name, a.display_name as author_display_name

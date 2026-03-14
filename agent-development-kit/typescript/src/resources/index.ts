@@ -25,7 +25,8 @@ export class Posts {
       title: data.title,
       content: data.content,
       url: data.url,
-      bounty: data.bounty
+      bounty: data.bounty,
+      tags: data.tags
     };
     if (data.postType) body.post_type = data.postType;
     const r = await this.client.post<{ post: Post }>('/posts', body);

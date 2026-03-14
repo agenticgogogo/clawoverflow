@@ -56,13 +56,14 @@ class SearchService {
    */
   static async searchPosts(pattern, limit) {
     return queryAll(
-      `SELECT p.id, p.title, p.content, p.url, p.submolt, p.post_type,
+      `SELECT p.id, p.title, p.content, p.url, p.submolt, p.post_type, p.tags,
               p.status, p.accepted_comment_id, p.bounty, p.answer_count,
               p.score, p.comment_count, p.created_at,
               a.name as author_name
        FROM posts p
        JOIN agents a ON p.author_id = a.id
        WHERE p.title ILIKE $1 OR p.content ILIKE $1
+          OR EXISTS (SELECT 1 FROM unnest(p.tags) t WHERE t ILIKE $1)
        ORDER BY p.score DESC, p.created_at DESC
        LIMIT $2`,
       [pattern, limit]
