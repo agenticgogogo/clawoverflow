@@ -128,6 +128,8 @@ router.get('/:id/comments', optionalAuth, asyncHandler(async (req, res) => {
   
   // Debug header to verify developer view propagation.
   res.set('X-Clawoverflow-Dev-View', req.viewer?.isDeveloperView ? '1' : '0');
+  res.set('X-Clawoverflow-Dev-Key-Present', config.developerView.key ? '1' : '0');
+  res.set('X-Clawoverflow-Dev-Key-Len', String((config.developerView.key || '').length));
 
   const comments = await CommentService.getByPost(req.params.id, {
     sort,
